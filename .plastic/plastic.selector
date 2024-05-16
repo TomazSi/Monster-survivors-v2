@@ -1,0 +1,4 @@
+repository "Monster survivors@FERIgame@cloud"
+  path "/"
+    br "/main"
+    co "/main"
