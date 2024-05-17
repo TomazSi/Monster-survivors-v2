@@ -11,14 +11,17 @@ public class ZombieController : MonoBehaviour
     public int maxHealth = 10;
     public int damage = 2;
     private bool isCollidingWithPlayer = false;
+    private bool isFacingRight = true;
 
     public EnemyAttributes enemyAttributes;
+    private Animator animator;
     // Start is called before the first frame update
     void Start()
     {
         enemyAttributes = GetComponent<EnemyAttributes>();
         enemyAttributes.SetStats(maxHealth, speed, damage);
         rb = GetComponent<Rigidbody2D>();
+        animator = GetComponent<Animator>();
     }
 
     // Update is called once per frame
@@ -32,10 +35,20 @@ public class ZombieController : MonoBehaviour
         {
             Vector2 direction=(playerTransform.position - transform.position).normalized;
             rb.velocity = direction*speed;
+            animator.SetBool("Moving", true);
+            if (direction.x > 0 && !isFacingRight)
+            {
+                Flip();
+            }
+            else if (direction.x < 0 && isFacingRight)
+            {
+                Flip();
+            }
         }
         else
         {
             rb.velocity = Vector2.zero;
+            animator.SetBool("Moving", false);
         }
     }
     public void SetPlayerReference(Transform player)
@@ -55,5 +68,12 @@ public class ZombieController : MonoBehaviour
         {
             isCollidingWithPlayer=false;
         }
+    }
+    private void Flip()
+    {
+        isFacingRight = !isFacingRight;
+        Vector3 theScale = transform.localScale;
+        theScale.x *= -1;
+        transform.localScale = theScale;
     }
 }

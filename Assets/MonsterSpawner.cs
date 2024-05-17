@@ -7,10 +7,11 @@ public class MonsterSpawner : MonoBehaviour
     public GameObject monsterPrefab;
     public Transform spawnPoint;
     public Transform playerTransform;
+    private Animator animator;
     // Start is called before the first frame update
     void Start()
     {
-        
+        animator = GetComponent<Animator>();
     }
     private void OnTriggerEnter2D(Collider2D collision)
     {
@@ -20,6 +21,7 @@ public class MonsterSpawner : MonoBehaviour
 
     private void SpawnMonster()
     {
+        animator.SetBool("Activate", true);
         GameObject monster = Instantiate(monsterPrefab, spawnPoint.position, Quaternion.identity);
 
         // Get the ZombieController component from the spawned monster
@@ -34,5 +36,6 @@ public class MonsterSpawner : MonoBehaviour
         {
             Debug.LogWarning("ZombieController component not found on the spawned monster!");
         }
+        animator.SetBool("Activate", false);
     }
 }

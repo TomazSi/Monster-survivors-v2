@@ -17,6 +17,7 @@ public class PlayerAttributes : MonoBehaviour
     public Transform basicAttackPoint = null;
     public float attackRange = 1f;
     public LayerMask enemyLayers;
+    private Animator animator;
 
     public void TakeDamage(int change)
     {
@@ -31,6 +32,7 @@ public class PlayerAttributes : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        animator = GetComponent<Animator>();
         health = maxHealth;
         healthRegen=0;
     }
@@ -46,11 +48,13 @@ public class PlayerAttributes : MonoBehaviour
     private void BasicAttack()
     {
         int attackDamage = damage * 5;
+        animator.SetBool("BasicAttack", true);
         Collider2D[] hitEnemies = Physics2D.OverlapCircleAll(basicAttackPoint.position,attackRange,enemyLayers);
         foreach(Collider2D enemy in hitEnemies)
         {
             enemy.GetComponent<ZombieController>().enemyAttributes.ChangeHealth(attackDamage);
         }
+        animator.SetBool("BasicAttack", false);
     }
     private void OnDrawGizmosSelected()
     {

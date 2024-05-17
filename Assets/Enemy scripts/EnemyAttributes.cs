@@ -10,21 +10,27 @@ public class EnemyAttributes : MonoBehaviour
     public int speed;
     public int damage = 1;
     public float attackSpeed = 1f;
+    
+    private Animator animator;
     // Start is called before the first frame update
     void Start()
     {
         health = maxHealth;
+        animator = GetComponent<Animator>();
     }
 
     public void ChangeHealth(int change)
     {
+        animator.SetBool("Hit", true);
         health -= change;
         Debug.Log("Monster took " + change + " damage "+ health);
         if (health <= 0)
             Die();
+        animator.SetBool("Hit", false);
     }
     public void Die()
     {
+        animator.SetBool("Dies", true);
         if (ScoreManager.Instance != null)
             ScoreManager.Instance.AddScore(10); 
         Destroy(gameObject);
