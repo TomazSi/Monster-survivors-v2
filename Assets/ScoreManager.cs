@@ -8,13 +8,26 @@ namespace Assets
 {
     public class ScoreManager : MonoBehaviour
     {
+        public static ScoreManager Instance { get; private set; }
         public int Score { get; private set; }
 
         public Text scoreText;
 
         private bool hasLoadedMenu = false;
 
-        private void Update()
+        private void Awake()
+        {
+            if (Instance == null)
+            {
+                Instance = this;
+            }
+            else
+            {
+                Destroy(Instance);
+            }
+        }
+
+            private void Update()
         {
             if (Score >= 20 && !hasLoadedMenu)
             {
