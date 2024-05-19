@@ -16,6 +16,8 @@ public class PlayerAttributes : MonoBehaviour
     public int level = 0;
     public int XP = 0;
 
+    [SerializeField] HealthBar healthBar;
+
     public Transform basicAttackPoint = null;
     public float attackRange = 1f;
     public LayerMask enemyLayers;
@@ -24,19 +26,23 @@ public class PlayerAttributes : MonoBehaviour
     public void TakeDamage(int change)
     {
         health -= change;
+        healthBar.SetHealth(health, maxHealth);
         if (health <= 0)
             Die();
     }
     public void Heal(int change)
     {
         health += change;
+        healthBar.SetHealth(health, maxHealth);
     }
     // Start is called before the first frame update
     void Start()
     {
         animator = GetComponent<Animator>();
         health = maxHealth;
-        healthRegen=0;
+        healthBar = GetComponentInChildren<HealthBar>();
+        healthBar.SetMaxHealth(maxHealth);
+        healthRegen =0;
     }
 
     // Update is called once per frame

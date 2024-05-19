@@ -10,19 +10,24 @@ public class EnemyAttributes : MonoBehaviour
     public int speed;
     public int damage = 1;
     public float attackSpeed = 1f;
-    
+
+    [SerializeField] HealthBar healthBar;
+
     private Animator animator;
     // Start is called before the first frame update
     void Start()
     {
         health = maxHealth;
         animator = GetComponent<Animator>();
+        healthBar = GetComponentInChildren<HealthBar>();
+        healthBar.SetMaxHealth(maxHealth);
     }
 
     public void ChangeHealth(int change)
     {
         animator.SetBool("Hit", true);
         health -= change;
+        healthBar.SetHealth(health, maxHealth);
         Debug.Log("Monster took " + change + " damage "+ health);
         if (health <= 0)
             Die();
