@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class PlayerAttributes : MonoBehaviour
 {
+    public GameObject PauseMenu;
+
     //stats
     public int maxHealth;
     public int health;
@@ -44,6 +46,18 @@ public class PlayerAttributes : MonoBehaviour
         {
             BasicAttack();
         }
+
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            if (PauseMenu.activeInHierarchy)
+            {
+                ResumeGame();
+            }
+            else
+            {
+                PauseGame();
+            }
+        }
     }
     private void BasicAttack()
     {
@@ -65,5 +79,17 @@ public class PlayerAttributes : MonoBehaviour
     private void Die()
     {
         Debug.Log("END");
+    }
+
+    void PauseGame()
+    {
+        PauseMenu.SetActive(true);
+        Time.timeScale = 0f; // This pauses the game
+    }
+
+    void ResumeGame()
+    {
+        PauseMenu.SetActive(false);
+        Time.timeScale = 1f; // This resumes the game
     }
 }

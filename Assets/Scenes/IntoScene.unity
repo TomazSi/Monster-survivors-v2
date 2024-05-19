@@ -631,7 +631,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: -1, y: 131}
-  m_SizeDelta: {x: -525.3367, y: -298.6144}
+  m_SizeDelta: {x: -525.34, y: -283.7713}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1646254816
 MonoBehaviour:
@@ -661,8 +661,7 @@ MonoBehaviour:
     blades of a distant chopper at 500 marks,\r\n the threshold of glory.\n\r\nYour
     Arsenal:\r\n    Movement (WASD): Guide Alex through the treacherous ruins.\r\n   
     Attack (Space): Unleash your blade upon the lurking horrors (increases score
-    on kill).\r\n    Interact (E Key): Uncover secrets and plunder forgotten treasures
-    within the ruins (increases score)."
+    on kill).\r"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -689,7 +688,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 22.25
+  m_fontSize: 24.75
   m_fontSizeBase: 0
   m_fontWeight: 400
   m_enableAutoSizing: 1
