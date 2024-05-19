@@ -1,26 +1,40 @@
 ﻿using System.Collections;
+using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 namespace Assets
 {
     public class ScoreManager : MonoBehaviour
     {
-        public static ScoreManager Instance { get; private set; }
         public int Score { get; private set; }
 
         public Text scoreText;
 
-        private void Awake()
+        private bool hasLoadedMenu = false;
+
+        private void Update()
         {
-            if (Instance == null)
+            if (Score >= 20 && !hasLoadedMenu)
             {
-                Instance = this;
-                DontDestroyOnLoad(gameObject);
+                hasLoadedMenu = true;
+                StartCoroutine(LoadSceneAsync());
             }
-            else
+        }
+
+        IEnumerator LoadSceneAsync()
+        {
+            AsyncOperation asyncLoad = SceneManager.LoadSceneAsync("Menu");
+            asyncLoad.allowSceneActivation = false;  // Initially prevent the scene from activating
+
+            while (!asyncLoad.isDone)
             {
-                Destroy(gameObject);
+                if (asyncLoad.progress >= 0.9f)  // Unity loads up to 90% and waits for activation
+                {
+                    asyncLoad.allowSceneActivation = true;  // Activate the scene
+                }
+                yield return null;
             }
         }
 
