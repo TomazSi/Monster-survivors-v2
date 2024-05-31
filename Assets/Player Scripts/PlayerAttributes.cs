@@ -7,7 +7,7 @@ public class PlayerAttributes : MonoBehaviour
     public GameObject PauseMenu;
 
     //stats
-    public int maxHealth;
+    private int maxHealth = 12;
     public int health;
     public float healthRegen; //??
     public float speed;
@@ -27,6 +27,7 @@ public class PlayerAttributes : MonoBehaviour
     {
         health -= change;
         healthBar.SetHealth(health, maxHealth);
+        Debug.Log("Hit for: " + change);
         if (health <= 0)
             Die();
     }
@@ -40,6 +41,7 @@ public class PlayerAttributes : MonoBehaviour
     {
         animator = GetComponent<Animator>();
         health = maxHealth;
+        Debug.Log(health);
         healthBar = GetComponentInChildren<HealthBar>();
         healthBar.SetMaxHealth(maxHealth);
         healthRegen =0;

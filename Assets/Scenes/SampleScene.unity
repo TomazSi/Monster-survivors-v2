@@ -1648,6 +1648,10 @@ PrefabInstance:
       propertyPath: m_SpriteTilingProperty.oldSize.y
       value: 1.5
       objectReference: {fileID: 0}
+    - target: {fileID: 408975938429435813, guid: cd2c2b71fb31aa742960e27b2bfe2c67, type: 3}
+      propertyPath: playerAttributes
+      value: 
+      objectReference: {fileID: 39209461}
     - target: {fileID: 442300426994276027, guid: cd2c2b71fb31aa742960e27b2bfe2c67, type: 3}
       propertyPath: Camera
       value: 

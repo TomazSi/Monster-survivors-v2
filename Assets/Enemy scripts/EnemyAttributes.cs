@@ -8,12 +8,14 @@ public class EnemyAttributes : MonoBehaviour
     public int maxHealth;
     public int health;
     public int speed;
-    public int damage = 1;
+    public int damage = 5;
     public float attackSpeed = 1f;
+    public float currentAttack = 0f;
 
     [SerializeField] HealthBar healthBar;
 
     private Animator animator;
+    public PlayerAttributes playerAttributes;
     // Start is called before the first frame update
     void Start()
     {
@@ -21,6 +23,14 @@ public class EnemyAttributes : MonoBehaviour
         animator = GetComponent<Animator>();
         healthBar = GetComponentInChildren<HealthBar>();
         healthBar.SetMaxHealth(maxHealth);
+        if (playerAttributes == null)
+        {
+            playerAttributes = FindObjectOfType<PlayerAttributes>();
+            if (playerAttributes == null)
+            {
+                Debug.LogError("PlayerAttributes not found in the scene.");
+            }
+        }
     }
 
     public void ChangeHealth(int change)
@@ -50,5 +60,11 @@ public class EnemyAttributes : MonoBehaviour
         {
             this.health = maxHealth;
         }
+    }
+    public void Attack()
+    {
+        
+        playerAttributes.TakeDamage(damage);
+        
     }
 }

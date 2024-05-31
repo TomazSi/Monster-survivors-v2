@@ -49,6 +49,15 @@ public class ZombieController : MonoBehaviour
         {
             rb.velocity = Vector2.zero;
             animator.SetBool("Moving", false);
+            if (enemyAttributes.currentAttack > enemyAttributes.attackSpeed)
+            {
+                enemyAttributes.currentAttack = 0;
+                enemyAttributes.Attack();
+            }
+        }
+        if (enemyAttributes.currentAttack < enemyAttributes.attackSpeed)
+        {
+            enemyAttributes.currentAttack += Time.deltaTime;
         }
     }
     public void SetPlayerReference(Transform player)
