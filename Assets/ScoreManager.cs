@@ -29,7 +29,7 @@ namespace Assets
 
             private void Update()
         {
-            if (Score >= 100 && !hasLoadedMenu)
+            if (Score >= 1000 && !hasLoadedMenu)
             {
                 hasLoadedMenu = true;
                 StartCoroutine(LoadSceneAsync());

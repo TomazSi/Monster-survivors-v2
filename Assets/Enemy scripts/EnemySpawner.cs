@@ -8,7 +8,7 @@ public class EnemySpawner : MonoBehaviour
     public Transform playerTransform;
     public float spawnDistance = 10f;
     public float spawnInterval = 5f;
-
+    
     private Camera mainCamera;
 
     void Start()

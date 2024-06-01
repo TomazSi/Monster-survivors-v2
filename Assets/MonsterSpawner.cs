@@ -1,41 +1,53 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class MonsterSpawner : MonoBehaviour
 {
-    public GameObject monsterPrefab;
+    public GameObject enemyPrefab;
     public Transform spawnPoint;
-    public Transform playerTransform;
-    private Animator animator;
-    // Start is called before the first frame update
-    void Start()
+    public float spawnRadious = 6f;
+    public int enemiesToSpawn = 6;
+
+    private Animator Animator;
+
+    private void Start()
     {
-        animator = GetComponent<Animator>();
+        Animator = GetComponent<Animator>();
     }
+
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.gameObject.name == "Player")
-            SpawnMonster();
+        {
+            SpawnEnemies();
+            Assets.ScoreManager.Instance.AddScore(100);
+        }
     }
 
-    private void SpawnMonster()
+    private void SpawnEnemies()
     {
-        animator.SetBool("Activate", true);
-        GameObject monster = Instantiate(monsterPrefab, spawnPoint.position, Quaternion.identity);
+        Animator.SetBool("Activated", true);
 
-        // Get the ZombieController component from the spawned monster
-        ZombieController zombieController = monster.GetComponent<ZombieController>();
+        for (int i = 0; i < enemiesToSpawn; i++)
+        {
+            float angle = i * Mathf.PI * 2 / enemiesToSpawn;
+            Vector3 enemyPos = new Vector3(Mathf.Cos(angle), Mathf.Sin(angle), 0) * spawnRadious + spawnPoint.position;
+            GameObject enemy = Instantiate(enemyPrefab, enemyPos, Quaternion.identity);
+            
+            ZombieController zombieController = enemy.GetComponent<ZombieController>();
 
-        // Set the player's transform reference in the ZombieController
-        if (zombieController != null)
-        {
-            zombieController.SetPlayerReference(playerTransform);
+            if (zombieController != null)
+            {
+                zombieController.SetPlayerReference(GameObject.Find("Player").transform);
+            }
+            else
+            {
+                Debug.LogError("ZombieController not found in enemy prefab");
+            }
         }
-        else
-        {
-            Debug.LogWarning("ZombieController component not found on the spawned monster!");
-        }
-        animator.SetBool("Activate", false);
+        
+        Animator.SetBool("Activated", false);
     }
 }
