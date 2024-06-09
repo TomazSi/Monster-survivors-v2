@@ -14,8 +14,8 @@ TagManager:
   - Player
   - Enemies
   - Spawner
-  - 
-  - 
+  - Wall
+  - Tilemap
   - 
   - 
   - 
@@ -40,4 +40,10 @@ TagManager:
   m_SortingLayers:
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: Walls
+    uniqueID: 3499370701
+    locked: 0
+  - name: Background
+    uniqueID: 1447011681
     locked: 0
