@@ -87,7 +87,7 @@ public class PlayerAttributes : MonoBehaviour
     private void Die()
     {
         Debug.Log("END");
-        FindObjectOfType<DeathManager>().PlayerDied();
+        FindObjectOfType<EndGameManager>().PlayerDied();
     }
 
     void PauseGame()

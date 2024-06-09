@@ -27,27 +27,12 @@ namespace Assets
             }
         }
 
-            private void Update()
+        private void Update()
         {
             if (Score >= 1000 && !hasLoadedMenu)
             {
                 hasLoadedMenu = true;
-                StartCoroutine(LoadSceneAsync());
-            }
-        }
-
-        IEnumerator LoadSceneAsync()
-        {
-            AsyncOperation asyncLoad = SceneManager.LoadSceneAsync("Menu");
-            asyncLoad.allowSceneActivation = false;  // Initially prevent the scene from activating
-
-            while (!asyncLoad.isDone)
-            {
-                if (asyncLoad.progress >= 0.9f)  // Unity loads up to 90% and waits for activation
-                {
-                    asyncLoad.allowSceneActivation = true;  // Activate the scene
-                }
-                yield return null;
+                FindObjectOfType<EndGameManager>().PlayerWon();
             }
         }
 

@@ -3,15 +3,27 @@ using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using System.Collections;
 
-public class DeathManager : MonoBehaviour
+public class EndGameManager : MonoBehaviour
 {
     public Text deathMessage;
+    public Text winMessage;
     public Image fadePanel;
     public float fadeDuration = 2f;
 
     public void PlayerDied()
     {
-        deathMessage.enabled = true;  // Show the "You Died" message
+        Color currentColor = deathMessage.color;  // Get the current color of the Text component
+        currentColor.a = 1f;  // Set the alpha value to 1 (fully opaque)
+        deathMessage.color = currentColor;
+        StartCoroutine(FadeToBlackAndLoadMenu());
+    }
+
+    public void PlayerWon()
+    {
+        // change alpha to 255
+        Color currentColor = winMessage.color;  // Get the current color of the Text component
+        currentColor.a = 1f;  // Set the alpha value to 1 (fully opaque)
+        winMessage.color = currentColor;
         StartCoroutine(FadeToBlackAndLoadMenu());
     }
 
