@@ -7,13 +7,17 @@ public class EnemySpawner : MonoBehaviour
     public GameObject enemyPrefab;
     public Transform playerTransform;
     public float spawnDistance = 10f;
-    public float spawnInterval = 5f;
+    public float baseSpawnInterval = 5f;
     
     private Camera mainCamera;
+    private float spawnInterval;
+    private PlayerAttributes playerAttributes;
+
 
     void Start()
     {
         mainCamera = Camera.main;
+        playerAttributes = playerTransform.GetComponent<PlayerAttributes>();
         StartCoroutine(SpawnEnemies());
     }
 
@@ -21,9 +25,19 @@ public class EnemySpawner : MonoBehaviour
     {
         while (true)
         {
+            UpdateSpawnInterval();
             yield return new WaitForSeconds(spawnInterval);
-            SpawnEnemy();
+            int levelMultiplier = Mathf.CeilToInt(playerAttributes.Level * 1.5f); // Increase the number of enemies based on level
+            for (int i = 0; i < levelMultiplier; i++)
+            {
+                SpawnEnemy();
+            }
         }
+    }
+
+    void UpdateSpawnInterval()
+    {
+        spawnInterval = Mathf.Max(1f, baseSpawnInterval - (playerAttributes.Level * 0.2f)); // Decrease interval as level increases
     }
 
     void SpawnEnemy()
@@ -31,13 +45,13 @@ public class EnemySpawner : MonoBehaviour
         Vector3 spawnPosition = GetRandomSpawnPosition();
         GameObject enemy = Instantiate(enemyPrefab, spawnPosition, Quaternion.identity);
 
-        // Get the ZombieController component from the spawned enemy
+        // Configuring the enemy's damage and health
         ZombieController zombieController = enemy.GetComponent<ZombieController>();
-
-        // Set the player's transform reference in the ZombieController
         if (zombieController != null)
         {
             zombieController.SetPlayerReference(playerTransform);
+            zombieController.damage = (2 * playerAttributes.Level); // Scale damage with player level
+            zombieController.maxHealth = (10 * playerAttributes.Level); // Scale health with player level
         }
         else
         {
