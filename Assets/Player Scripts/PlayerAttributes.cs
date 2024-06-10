@@ -7,7 +7,7 @@ public class PlayerAttributes : MonoBehaviour
     public GameObject PauseMenu;
 
     //stats
-    private int maxHealth = 12;
+    private int maxHealth = 23;
     public int health;
     public float speed;
     public int damage = 1;
@@ -20,7 +20,7 @@ public class PlayerAttributes : MonoBehaviour
     [SerializeField] HealthBar healthBar;
 
     public Transform basicAttackPoint = null;
-    public float attackRange = 2f;
+    public float attackRange = 0.6f;
     public LayerMask enemyLayers;
     private Animator animator;
 
@@ -82,6 +82,7 @@ public class PlayerAttributes : MonoBehaviour
     {
         if (basicAttackPoint == null)
             return;
+        Gizmos.color = Color.red;
         Gizmos.DrawWireSphere(basicAttackPoint.position, attackRange);
     }
     private void Die()

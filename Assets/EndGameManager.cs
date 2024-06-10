@@ -10,21 +10,34 @@ public class EndGameManager : MonoBehaviour
     public Image fadePanel;
     public float fadeDuration = 2f;
 
+    private void Start()
+    {
+        // Initialize messages to be invisible at start
+        SetAlpha(deathMessage, 0f);
+        SetAlpha(winMessage, 0f);
+        SetAlpha(fadePanel, 0f);
+    }
+
     public void PlayerDied()
     {
-        Color currentColor = deathMessage.color;  // Get the current color of the Text component
-        currentColor.a = 1f;  // Set the alpha value to 1 (fully opaque)
-        deathMessage.color = currentColor;
+        SetAlpha(deathMessage, 1f);
         StartCoroutine(FadeToBlackAndLoadMenu());
     }
 
     public void PlayerWon()
     {
-        // change alpha to 255
-        Color currentColor = winMessage.color;  // Get the current color of the Text component
-        currentColor.a = 1f;  // Set the alpha value to 1 (fully opaque)
-        winMessage.color = currentColor;
+        SetAlpha(winMessage, 1f);
         StartCoroutine(FadeToBlackAndLoadMenu());
+    }
+
+    private void SetAlpha(Graphic graphic, float alpha)
+    {
+        if (graphic != null)
+        {
+            Color currentColor = graphic.color;
+            currentColor.a = alpha;
+            graphic.color = currentColor;
+        }
     }
 
     IEnumerator FadeToBlackAndLoadMenu()
@@ -40,4 +53,3 @@ public class EndGameManager : MonoBehaviour
         SceneManager.LoadScene("Menu");  // Load the Main Menu scene, make sure the scene name matches your scene settings
     }
 }
-
